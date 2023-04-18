@@ -1,11 +1,18 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const usuarios = require('./models/Usuario');
 
-// Rotas
+// Ler JSON
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
+// Rotas da API
+const usuariosRoutes = require("./routes/usuariosRoutes")
+app.use("/usuario", usuariosRoutes)
+
+// Rota Inicial
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.json({message: "Hello World!"})
 });
 
 // Conectar com o banco de dados e com o servidor
