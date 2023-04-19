@@ -41,5 +41,34 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+// Atualizar usuario ------------------------------------------------------------------------------------------------------------------------
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id
+  const {nome, login, senha} = req.body
+
+  const usuario = {
+    nome,
+    login,
+    senha
+  }
+
+  try {
+    const attUsuario = await Usuario.updateOne({_id: id}, usuario)
+    res.json(usuario)
+  } catch(error) {
+    res.json({error: error})
+  }
+})
+
+// Deletar usuario -------------------------------------------------------------------------------------------------------------------------
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id
+  try {
+    const usuario = await Usuario.deleteOne({_id: id})
+    res.json("Usuario deletado com sucesso!")
+  } catch(error) {
+    res.json({error: error})
+  }
+})
 
 module.exports = router
